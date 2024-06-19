@@ -18,7 +18,6 @@ const Dock = ({ icons, onOpenApp }) => {
                 const minDistance = 30;
 
                 const distance = Math.min(Math.max(Math.abs(Math.sqrt(0.5*(e.clientX - iconCenterX) ** 2 + (e.clientY - iconCenterY) ** 2)), minDistance), maxDistance);
-                console.log(distance);
 
                 const scale = Math.max(1, 1.5 - (distance / maxDistance)*0.75);
 

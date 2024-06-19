@@ -1,31 +1,84 @@
 .window {
     display: block;
     position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%, 0);
     width: 80%;
     height: 80%;
-    background-color: #1e1e1e;
+    background-color: #3c3b39;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: auto;
+    transform: translate(-50%, 0);
 }
 
 .window .header {
-    background-color: #333;
+    background-color: #4e4d4c;
     padding: 10px;
     border-radius: 10px 10px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: move;
+    user-select: none;
+}
+
+.window .header:hover {
+    cursor: grab;
+}
+
+.window .header:active {
+    cursor: grabbing;
 }
 
 .window .header .close-btn {
     cursor: pointer;
-    color: #ff5f56;
+    color: #ec6a5e;
 }
 
 .window-content {
     padding: 20px;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+    right: 0;
+    bottom: 0;
+    cursor: nwse-resize; /* This cursor indicates resizing is possible */
+    border-radius: 0 0 10px 0; /* Optional: rounds the bottom-right corner */
+}
+
+.close-btn {
+    cursor: pointer;
+    display: inline-block; /* Ensures the div behaves like a span */
+    padding: 5px; /* Adjust padding as needed */
+}
+
+.close-circle {
+    width: 15px; /* Size of the circle */
+    height: 15px; /* Size of the circle */
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #fc5753; /* Red background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s; /* Smooth transition for hover effect */
+    position: relative; /* Ensure positioning context for pseudo-elements */
+}
+
+.close-circle:hover {
+    background-color: #fc5753; /* Darker red on hover */
+}
+
+.close-circle:hover::after {
+    content: "×"; /* Shows 'x' on hover */
+    color: #8a2e2c; /* 'x' color */
+    font-size: 16px; /* Adjust 'x' size as needed */
+    line-height: 15px; /* Match the height of the circle to align vertically */
+    text-align: center; /* Center the text horizontally */
+    width: 100%; /* Ensure the pseudo-element spans the entire width of the parent */
+    position: absolute; /* Position absolutely within the .close-circle */
+    top: 0; /* Align to the top of the parent */
+    left: 0; /* Align to the left of the parent */
 }
