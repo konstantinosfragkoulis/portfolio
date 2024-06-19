@@ -1,0 +1,31 @@
+.window {
+    display: block;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 80%;
+    height: 80%;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+.window .header {
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.window .header .close-btn {
+    cursor: pointer;
+    color: #ff5f56;
+}
+
+.window-content {
+    padding: 20px;
+}

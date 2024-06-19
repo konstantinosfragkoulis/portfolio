@@ -1,0 +1,17 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #202020;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.App {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
