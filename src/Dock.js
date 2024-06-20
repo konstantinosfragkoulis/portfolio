@@ -23,7 +23,7 @@ const Dock = ({ icons, onOpenApp }) => {
 
                 icon.style.transform = `scale(${scale})`;
                 // After scaling the icon, we need to move it up depending on the scale to keep a constant distance from the bottom of the dock
-                icon.style.bottom = `${(scale - 1) * 50}px`;
+                icon.style.bottom = `${((scale - 1)*50 +2)}px`;
             });
         };
 

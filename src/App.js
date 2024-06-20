@@ -35,9 +35,9 @@ const App = () => {
                         <h1>Projects</h1>
                         <p>Here are some of the projects I have worked on:</p>
                         <ul>
-                            <li>Project 1: Description</li>
-                            <li>Project 2: Description</li>
-                            <li>Project 3: Description</li>
+                            <li>Study Aid: A mobile app that helps students with learning difficulties study more efficiently. Using Artificial Intelligence, the application enhances notes, generates quizzes and creates a custom study schedule tailored to each student.</li>
+                            <li>Racecar: After completing an online course by MIT, my team and I created and programmed an autonomous car in order to complete at the national competition Racecar Challenge. We got 2nd and 3rd place two consequitive years.</li>
+                            <li><a href="https://github.com/konstantinosfragkoulis/DroneCtrl" target="_blank" rel="noopener noreferrer">Autonomous Drone</a>: Building on the knowledge I gained from creating an autonomous racecar, I decided to develop an autonomous drone. This project presents a greater challenge, allowing me to expand my knowledge of autonomous vehicles and delve deeper into electronics, not just coding. </li>
                         </ul>
                         <h1>See my work</h1>
                         <p>You can find more of my projects on:</p>

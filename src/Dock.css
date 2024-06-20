@@ -9,6 +9,8 @@
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    margin-bottom: 10px;
 }
 
 .dock-item img {
@@ -17,4 +19,5 @@
     transition: transform 0.1s ease;
     cursor: pointer;
     filter: invert(95%);
+    transform: translateY(2px);
 }
