@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #202020;
+    background-color: #1b0a42;
     color: #e0e0e0;
     margin: 0;
     padding: 0;
@@ -14,4 +14,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+a {
+    color: #0a84ff; /* Set the link color */
+    text-decoration: none; /* Remove underline */
+}
+
+a:visited {
+    color: #0a84ff; /* Prevent color change after the link is clicked */
 }

@@ -3,22 +3,26 @@
     position: fixed;
     width: 80%;
     height: 80%;
-    background-color: #3c3b39;
+    background-color: #2a2a2a;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     overflow: auto;
     transform: translate(-50%, 0);
+    color: #ffffff;
 }
 
 .window .header {
-    background-color: #4e4d4c;
+    background-color: #211f20;
     padding: 10px;
     border-radius: 10px 10px 0 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     cursor: move;
     user-select: none;
+    color: #5d5c5d;
+    position: relative;
+    padding-left: 0;
 }
 
 .window .header:hover {
@@ -31,7 +35,8 @@
 
 .window .header .close-btn {
     cursor: pointer;
-    color: #ec6a5e;
+    margin-left: 10px;
+    padding: 0;
 }
 
 .window-content {
@@ -49,17 +54,29 @@
     border-radius: 0 0 10px 0; /* Optional: rounds the bottom-right corner */
 }
 
+.window-controls {
+    display: flex;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0;
+}
+
 .close-btn {
     cursor: pointer;
-    display: inline-block; /* Ensures the div behaves like a span */
-    padding: 5px; /* Adjust padding as needed */
+    padding: 8px; /* Adjust padding as needed */
+}
+
+.close-btn:last-child {
+    margin-right: 0; /* Removes margin from the last button */
 }
 
 .close-circle {
     width: 15px; /* Size of the circle */
     height: 15px; /* Size of the circle */
     border-radius: 50%; /* Makes it a circle */
-    background-color: #fc5753; /* Red background */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,8 +84,16 @@
     position: relative; /* Ensure positioning context for pseudo-elements */
 }
 
-.close-circle:hover {
-    background-color: #fc5753; /* Darker red on hover */
+.close-circle.red {
+    background-color: #ff453a; /* Red color */
+}
+
+.close-circle.yellow {
+    background-color: #ffd709; /* Yellow color */
+}
+
+.close-circle.green {
+    background-color: #32d74b; /* Green color */
 }
 
 .close-circle:hover::after {

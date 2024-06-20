@@ -26,7 +26,7 @@ const App = () => {
                 return (
                     <>
                         <h1>About Me</h1>
-                        <p>Hello! I'm a high school student from Greece, passionate about math, programming, computer science, robotics, physics, and AI. I'm preparing to apply to top US colleges and always eager to learn and explore new technologies.</p>
+                        <p>Hello! I'm a high school student from Greece, passionate about math, computer science, robotics, physics, and AI. I'm working on various projects and I'm always eager to learn and explore new technologies.</p>
                     </>
                 );
             case 'projects':
@@ -39,6 +39,12 @@ const App = () => {
                             <li>Project 2: Description</li>
                             <li>Project 3: Description</li>
                         </ul>
+                        <h1>See my work</h1>
+                        <p>You can find more of my projects on:</p>
+                        <ul>
+                            <li>GitHub: <a href="https://github.com/konstantinosfragkoulis" target="_blank" rel="noopener noreferrer">konstantinosfragkoulis</a></li>
+                            <li>Scrapbook: <a href="https://scrapbook.hackclub.com/KonstantinosFragkoulis" target="_blank" rel="noopener noreferrer">https://scrapbook.hackclub.com/KonstantinosFragkoulis</a></li>
+                        </ul>
                     </>
                 );
             case 'contact':
@@ -47,9 +53,10 @@ const App = () => {
                         <h1>Contact</h1>
                         <p>You can reach me at:</p>
                         <ul>
-                            <li>Email: <a href="mailto:example@example.com">example@example.com</a></li>
+                            <li>Email (Does not work yet!): <a href="mailto:inbox@konstantinos.me">inbox@konstantinos.me</a></li>
                             <li>LinkedIn: <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">yourprofile</a></li>
-                            <li>GitHub: <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">yourusername</a></li>
+                            <li>GitHub: <a href="https://github.com/konstantinosfragkoulis" target="_blank" rel="noopener noreferrer">konstantinosfragkoulis</a></li>
+                            
                         </ul>
                     </>
                 );

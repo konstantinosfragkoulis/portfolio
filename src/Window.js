@@ -62,10 +62,18 @@ const Window = ({ title, content, onClose }) => {
     return (
         <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }}>
             <div className="header" onMouseDown={handleMouseDown}>
+                <div className="window-controls">
+                    <span className="close-btn" onClick={onClose}>
+                        <div className="close-circle red"></div>
+                    </span>
+                    <span className="close-btn" onClick={onClose}>
+                        <div className="close-circle yellow"></div>
+                    </span>
+                    <span className="close-btn" onClick={onClose}>
+                        <div className="close-circle green"></div>
+                    </span>
+                </div>
                 <span>{title}</span>
-                <span className="close-btn" onClick={onClose}>
-                    <div className="close-circle"></div>
-                </span>
             </div>
             <div className="window-content">
                 {content}
