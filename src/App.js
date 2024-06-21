@@ -8,7 +8,7 @@ const App = () => {
 
     const icons = [
         { name: 'about', src: 'about-icon.png' },
-        { name: 'projects', src: 'projects-icon.png' },
+        { name: 'projects', src: 'projects-icon.svg' },
         { name: 'contact', src: 'contact-icon.png' }
     ];
 
@@ -26,7 +26,7 @@ const App = () => {
                 return (
                     <>
                         <h1>About Me</h1>
-                        <p>Hello! I'm a high school student from Greece, passionate about math, computer science, robotics, physics, and AI. I'm working on various projects and I'm always eager to learn and explore new technologies.</p>
+                        <p>Hi! I'm a high school student from Greece. I really like math, computer science, robotics, physics, and AI. I'm working constantly on various projects as I'm always eager to learn and explore new technologies.</p>
                     </>
                 );
             case 'projects':
