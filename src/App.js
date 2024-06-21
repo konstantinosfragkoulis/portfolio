@@ -7,9 +7,9 @@ const App = () => {
     const [activeApp, setActiveApp] = useState('');
 
     const icons = [
-        { name: 'about', src: 'about-icon.png' },
+        { name: 'about', src: 'about-icon.svg' },
         { name: 'projects', src: 'projects-icon.svg' },
-        { name: 'contact', src: 'contact-icon.png' }
+        { name: 'contact', src: 'contact-icon.svg' }
     ];
 
     const openApp = (app) => {
@@ -36,7 +36,7 @@ const App = () => {
                         <p>Here are some of the projects I have worked on:</p>
                         <ul>
                             <li>Study Aid: A mobile app that helps students with learning difficulties study more efficiently. Using Artificial Intelligence, the application enhances notes, generates quizzes and creates a custom study schedule tailored to each student.</li>
-                            <li>Racecar: After completing an online course by MIT, my team and I created and programmed an autonomous car in order to complete at the national competition Racecar Challenge. We got 2nd and 3rd place two consequitive years.</li>
+                            <li>Racecar: After completing an online course by MIT, my team and I created and programmed an autonomous car in order to complete at the national competition Racecar Challenge. We got 2nd and 3rd place two consecutive years.</li>
                             <li><a href="https://github.com/konstantinosfragkoulis/DroneCtrl" target="_blank" rel="noopener noreferrer">Autonomous Drone</a>: Building on the knowledge I gained from creating an autonomous racecar, I decided to develop an autonomous drone. This project presents a greater challenge, allowing me to expand my knowledge of autonomous vehicles and delve deeper into electronics, not just coding. </li>
                         </ul>
                         <h1>See my work</h1>

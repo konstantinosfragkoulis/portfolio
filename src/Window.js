@@ -1,14 +1,15 @@
 // src/Window.js
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import './Window.css';
 
 const Window = ({ title, content, onClose }) => {
     const windowRef = useRef(null);
     const offsetX = useRef(0);
     const offsetY = useRef(0);
+    const isResizingRef = useRef(false);
+    const minWidth = 300;
 
-    const [isResizing, setIsResizing] = useState(false);
-    const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 });
+    const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0});
 
     const handleMouseDown = (e) => {
         const windowElement = windowRef.current;
@@ -32,29 +33,38 @@ const Window = ({ title, content, onClose }) => {
 
     const handleResizeMouseDown = (e) => {
         e.stopPropagation(); // Prevent triggering move logic
-        setIsResizing(true);
+        isResizingRef.current = true;
         const windowElement = windowRef.current;
         initialPos.current = {
             x: e.clientX,
             y: e.clientY,
             width: windowElement.offsetWidth,
             height: windowElement.offsetHeight,
+            left: windowElement.getBoundingClientRect().left,
+            top: windowElement.getBoundingClientRect().top
         };
         document.addEventListener('mousemove', handleResizeMouseMove);
         document.addEventListener('mouseup', handleResizeMouseUp);
     };
 
     const handleResizeMouseMove = (e) => {
-        if (!isResizing) return;
+        if (!isResizingRef.current) return;
         const dx = e.clientX - initialPos.current.x;
         const dy = e.clientY - initialPos.current.y;
+
+        console.log("dx: ", dx, "dy: ", dy);
+
+        const newWidth = initialPos.current.width + dx;
+
         const windowElement = windowRef.current;
-        windowElement.style.width = `${initialPos.current.width + dx}px`;
+        windowElement.style.width = `${Math.max(newWidth, minWidth)}px`;
         windowElement.style.height = `${initialPos.current.height + dy}px`;
+        windowElement.style.left = `${initialPos.current.left + newWidth/2}px`;
+        windowElement.style.top = `${initialPos.current.top}px`;
     };
 
     const handleResizeMouseUp = () => {
-        setIsResizing(false);
+        isResizingRef.current = false;
         document.removeEventListener('mousemove', handleResizeMouseMove);
         document.removeEventListener('mouseup', handleResizeMouseUp);
     };
