@@ -1,15 +1,36 @@
-// src/Window.js
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './Window.css';
+
+const minWindowSize = {
+    "About": { minWidth: 640, minHeight: 240 },
+    "Projects": { minWidth: 640, minHeight: 580 },
+    "Contact": { minWidth: 480, minHeight: 280 },
+};
+
+const defaultWindowSize = {
+    "About": { defaultWidth: 790, defaultHeight: 440 },
+    "Projects": { defaultWidth: 965, defaultHeight: 615 },
+    "Contact": { defaultWidth: 500, defaultHeight: 305 },
+};
 
 const Window = ({ title, content, onClose }) => {
     const windowRef = useRef(null);
     const offsetX = useRef(0);
     const offsetY = useRef(0);
     const isResizingRef = useRef(false);
-    const minWidth = 300;
 
-    const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0});
+    const { minWidth, minHeight } = minWindowSize[title] || { minWidth: 640, minHeight: 480 };
+
+    useEffect(() => {
+        const { defaultWidth, defaultHeight } = defaultWindowSize[title] || { defaultWidth: 640, defaultHeight: 480 };
+        const windowElement = windowRef.current;
+        if (windowElement) {
+            windowElement.style.width = `${defaultWidth}px`;
+            windowElement.style.height = `${defaultHeight}px`;
+        }
+    }, [title]);
+
+    const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0, corner: ''});
 
     const handleMouseDown = (e) => {
         const windowElement = windowRef.current;
@@ -41,7 +62,8 @@ const Window = ({ title, content, onClose }) => {
             width: windowElement.offsetWidth,
             height: windowElement.offsetHeight,
             left: windowElement.getBoundingClientRect().left,
-            top: windowElement.getBoundingClientRect().top
+            top: windowElement.getBoundingClientRect().top,
+            corner: e.target.className.split(' ')[1],
         };
         document.addEventListener('mousemove', handleResizeMouseMove);
         document.addEventListener('mouseup', handleResizeMouseUp);
@@ -49,18 +71,60 @@ const Window = ({ title, content, onClose }) => {
 
     const handleResizeMouseMove = (e) => {
         if (!isResizingRef.current) return;
+        const { x, y, width, height, left, top, corner } = initialPos.current;
+
         const dx = e.clientX - initialPos.current.x;
         const dy = e.clientY - initialPos.current.y;
 
         console.log("dx: ", dx, "dy: ", dy);
 
-        const newWidth = initialPos.current.width + dx;
-
         const windowElement = windowRef.current;
-        windowElement.style.width = `${Math.max(newWidth, minWidth)}px`;
-        windowElement.style.height = `${initialPos.current.height + dy}px`;
-        windowElement.style.left = `${initialPos.current.left + newWidth/2}px`;
-        windowElement.style.top = `${initialPos.current.top}px`;
+        let newLeft = left;
+        let newTop = top;
+        let newWidth = width;
+        let newHeight = height;
+
+        switch (corner) {
+            case 'top-left':
+                newWidth = Math.max(width - dx, minWidth);
+                newHeight = Math.max(height - dy, minHeight);
+
+                newLeft = left + width - newWidth +(newWidth)/2;
+                newTop = top + height - newHeight;
+                break;
+            case 'top-right':
+                newWidth = Math.max(width + dx, minWidth);
+                newHeight = Math.max(height - dy, minHeight);
+
+                newLeft = left + newWidth/2;
+                newTop = top + height - newHeight;
+                break;
+            case 'bottom-left':
+                newWidth = Math.max(width - dx, minWidth);
+                newHeight = Math.max(height + dy, minHeight);
+                
+                newLeft = left + width - newWidth +(newWidth)/2;
+                newTop = top;
+                break;
+            case 'bottom-right':
+                newWidth = Math.max(width + dx, minWidth);
+                newHeight = Math.max(height + dy, minHeight);
+
+                newLeft = left + newWidth/2;
+                newTop = top;
+                break;
+            default:
+                newWidth = width;
+                newHeight = height;
+                newLeft = left;
+                newTop = top;
+                break;
+        }
+
+        windowElement.style.width = `${newWidth}px`;
+        windowElement.style.height = `${newHeight}px`;
+        windowElement.style.left = `${newLeft}px`;
+        windowElement.style.top = `${newTop}px`;
     };
 
     const handleResizeMouseUp = () => {
@@ -88,7 +152,10 @@ const Window = ({ title, content, onClose }) => {
             <div className="window-content">
                 {content}
             </div>
-            <div className="resize-handle" onMouseDown={handleResizeMouseDown}></div>
+            <div className="resize-handle top-left" onMouseDown={handleResizeMouseDown}></div>
+            <div className="resize-handle top-right" onMouseDown={handleResizeMouseDown}></div>
+            <div className="resize-handle bottom-left" onMouseDown={handleResizeMouseDown}></div>
+            <div className="resize-handle bottom-right" onMouseDown={handleResizeMouseDown}></div>
         </div>
     );
 };

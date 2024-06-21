@@ -47,12 +47,15 @@
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: #ccc;
-    right: 0;
-    bottom: 0;
-    cursor: nwse-resize; /* This cursor indicates resizing is possible */
+    background-color: #cccccc00;
+    z-index: 10;
     border-radius: 0 0 10px 0; /* Optional: rounds the bottom-right corner */
 }
+
+.top-left { top: 0; left: 0; cursor: nwse-resize; }
+.top-right { top: 0; right: 0; cursor: nesw-resize; }
+.bottom-left { bottom: 0; left: 0; cursor: nesw-resize; }
+.bottom-right { bottom: 0; right: 0; cursor: nwse-resize; }
 
 .window-controls {
     display: flex;
