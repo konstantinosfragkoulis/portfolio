@@ -19,5 +19,8 @@
     transition: transform 0.1s ease;
     cursor: pointer;
     filter: invert(95%);
-    transform: translateY(2px);
+    user-select: none; /* Prevent selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }

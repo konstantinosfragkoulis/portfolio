@@ -97,13 +97,29 @@
 }
 
 .close-circle:hover::after {
-    content: "×"; /* Shows 'x' on hover */
-    color: #8a2e2c; /* 'x' color */
     font-size: 16px; /* Adjust 'x' size as needed */
-    line-height: 15px; /* Match the height of the circle to align vertically */
     text-align: center; /* Center the text horizontally */
     width: 100%; /* Ensure the pseudo-element spans the entire width of the parent */
     position: absolute; /* Position absolutely within the .close-circle */
     top: 0; /* Align to the top of the parent */
     left: 0; /* Align to the left of the parent */
 }
+
+.close-circle.red:hover::after {
+    content: "×"; /* Shows 'x' on hover */
+    color: #8a2e2c; /* 'x' color */
+    line-height: 15px; /* Match the height of the circle to align vertically */
+}
+
+.close-circle.yellow:hover::after {
+    content: "-"; /* Shows 'x' on hover */
+    color: #887205; /* 'x' color */
+    line-height: 13px; /* Match the height of the circle to align vertically */
+}
+
+.close-circle.green:hover::after {
+    content: "+"; /* Shows 'x' on hover */
+    color: #1c7929; /* 'x' color */
+    line-height: 15px; /* Match the height of the circle to align vertically */
+}
+
