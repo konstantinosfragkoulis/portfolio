@@ -7,20 +7,31 @@ const minWindowSizePC = {
     "Contact": { minWidth: 480, minHeight: 280 },
 };
 const minWindowSizeMobile = {
-    "About": { minWidth: 640, minHeight: 240 },
-    "Projects": { minWidth: 640, minHeight: 580 },
-    "Contact": { minWidth: 280, minHeight: 280 },
+    "About": { minWidth: 280, minHeight: 290 },
+    "Projects": { minWidth: 280, minHeight: 580 },
+    "Contact": { minWidth: 315, minHeight: 260 },
 };
 
 const defaultWindowSizePC = {
-    "About": { defaultWidth: 790, defaultHeight: 440 },
+    "About": { defaultWidth: 600, defaultHeight: 340 },
     "Projects": { defaultWidth: 965, defaultHeight: 615 },
     "Contact": { defaultWidth: 500, defaultHeight: 305 },
 };
 const defaultWindowSizeMobile = {
-    "About": { defaultWidth: 790, defaultHeight: 440 },
-    "Projects": { defaultWidth: 965, defaultHeight: 615 },
-    "Contact": { defaultWidth: 500, defaultHeight: 305 },
+    "About": { defaultWidth: 320, defaultHeight: 300 },
+    "Projects": { defaultWidth: 356, defaultHeight: 615 },
+    "Contact": { defaultWidth: 325, defaultHeight: 260 },
+};
+
+const defaultWindowPosPC = {
+    "About": { left: 450, top: 525 },
+    "Projects": { left: 1350, top: 70 },
+    "Contact": { left: 315, top: 115 },
+};
+const defaultWindowPosMobile = {
+    "About": { left: 200, top: 40 },
+    "Projects": { left: 200, top: 195 },
+    "Contact": { left: 245, top: 160 },
 };
 
 const Window = ({ title, content, onClose, onHeaderClick }) => {
@@ -46,10 +57,13 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
 
     useEffect(() => {
         const { defaultWidth, defaultHeight } = defaultWindowSize[title] || { defaultWidth: 640, defaultHeight: 480 };
+        const defaultPos = isMobile ? defaultWindowPosMobile[title] : defaultWindowPosPC[title] || { left: 50, top: 50 };
         const windowElement = windowRef.current;
         if (windowElement) {
             windowElement.style.width = `${defaultWidth}px`;
             windowElement.style.height = `${defaultHeight}px`;
+            windowElement.style.left = `${defaultPos.left}px`;
+            windowElement.style.top = `${defaultPos.top}px`;
         }
     }, [title, isMobile]);
 
@@ -81,6 +95,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
         const windowElement = windowRef.current;
         windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current}px`;
         windowElement.style.top = `${clientY - offsetY.current}px`;
+        console.log("left: ", windowElement.style.left, "top: ", windowElement.style.top)
     };
 
     const handleEnd = () => {
