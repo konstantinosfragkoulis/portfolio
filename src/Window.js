@@ -13,7 +13,7 @@ const defaultWindowSize = {
     "Contact": { defaultWidth: 500, defaultHeight: 305 },
 };
 
-const Window = ({ title, content, onClose }) => {
+const Window = ({ title, content, onClose, onHeaderClick }) => {
     const windowRef = useRef(null);
     const offsetX = useRef(0);
     const offsetY = useRef(0);
@@ -39,6 +39,7 @@ const Window = ({ title, content, onClose }) => {
 
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.body.classList.add('no-select');
     };
 
     const handleMouseMove = (e) => {
@@ -50,6 +51,7 @@ const Window = ({ title, content, onClose }) => {
     const handleMouseUp = () => {
         document.removeEventListener('mousemove', handleMouseMove);
         document.removeEventListener('mouseup', handleMouseUp);
+        document.body.classList.remove('no-select');
     };
 
     const handleResizeMouseDown = (e) => {
@@ -67,14 +69,15 @@ const Window = ({ title, content, onClose }) => {
         };
         document.addEventListener('mousemove', handleResizeMouseMove);
         document.addEventListener('mouseup', handleResizeMouseUp);
+        document.body.classList.add('no-select');
     };
 
     const handleResizeMouseMove = (e) => {
         if (!isResizingRef.current) return;
         const { x, y, width, height, left, top, corner } = initialPos.current;
 
-        const dx = e.clientX - initialPos.current.x;
-        const dy = e.clientY - initialPos.current.y;
+        const dx = e.clientX - x;
+        const dy = e.clientY - y;
 
         console.log("dx: ", dx, "dy: ", dy);
 
@@ -131,19 +134,20 @@ const Window = ({ title, content, onClose }) => {
         isResizingRef.current = false;
         document.removeEventListener('mousemove', handleResizeMouseMove);
         document.removeEventListener('mouseup', handleResizeMouseUp);
+        document.body.classList.remove('no-select');
     };
 
     return (
-        <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }}>
+        <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }} onClick={() => onHeaderClick(title)}>
             <div className="header" onMouseDown={handleMouseDown}>
                 <div className="window-controls">
-                    <span className="close-btn" onClick={onClose}>
+                    <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle red"></div>
                     </span>
-                    <span className="close-btn" onClick={onClose}>
+                    <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle yellow"></div>
                     </span>
-                    <span className="close-btn" onClick={onClose}>
+                    <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle green"></div>
                     </span>
                 </div>

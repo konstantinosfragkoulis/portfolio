@@ -4,7 +4,7 @@ import Window from './Window';
 import './App.css';
 
 const App = () => {
-    const [activeApp, setActiveApp] = useState('');
+    const [activeApps, setActiveApps] = useState([]);
 
     const icons = [
         { name: 'about', src: 'about-icon.svg' },
@@ -12,12 +12,21 @@ const App = () => {
         { name: 'contact', src: 'contact-icon.svg' }
     ];
 
-    const openApp = (app) => {
-        setActiveApp(app);
+    const bringToFront = (appName) => {
+        setActiveApps(prevApps => {
+            const filteredApps = prevApps.filter(app => app !== appName);
+            return [...filteredApps, appName];
+        });
     };
 
-    const closeApp = () => {
-        setActiveApp('');
+    const openApp = (app) => {
+        if (!activeApps.includes(app)) {
+            setActiveApps([...activeApps, app]);
+        }
+    };
+
+    const closeApp = (appName) => {
+        setActiveApps(prevApps => prevApps.filter(app => app !== appName));
     };
 
     const getAppContent = (app) => {
@@ -43,7 +52,7 @@ const App = () => {
                         <p>You can find more of my projects on:</p>
                         <ul>
                             <li>GitHub: <a href="https://github.com/konstantinosfragkoulis" target="_blank" rel="noopener noreferrer">konstantinosfragkoulis</a></li>
-                            <li>Scrapbook: <a href="https://scrapbook.hackclub.com/KonstantinosFragkoulis" target="_blank" rel="noopener noreferrer">https://scrapbook.hackclub.com/KonstantinosFragkoulis</a></li>
+                            <li>Scrapbook: <a href="https://scrapbook.konstantinos.me" target="_blank" rel="noopener noreferrer">https://scrapbook.konstantinos.me</a></li>
                         </ul>
                     </>
                 );
@@ -54,7 +63,7 @@ const App = () => {
                         <p>You can reach me at:</p>
                         <ul>
                             <li>Email (Does not work yet!): <a href="mailto:inbox@konstantinos.me">inbox@konstantinos.me</a></li>
-                            <li>LinkedIn: <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer">yourprofile</a></li>
+                            <li>LinkedIn: <a href="https://www.linkedin.com/in/konstantinos-fragkoulis/" target="_blank" rel="noopener noreferrer">konstantinos-fragkoulis</a></li>
                             <li>GitHub: <a href="https://github.com/konstantinosfragkoulis" target="_blank" rel="noopener noreferrer">konstantinosfragkoulis</a></li>
                             
                         </ul>
@@ -69,13 +78,15 @@ const App = () => {
         <div className="App">
             <Dock icons={icons} onOpenApp={openApp} />
 
-            {activeApp && (
+            {activeApps.map((app) => (
                 <Window
-                    title={activeApp.charAt(0).toUpperCase() + activeApp.slice(1)}
-                    content={getAppContent(activeApp)}
-                    onClose={closeApp}
+                    key={app}
+                    title={app.charAt(0).toUpperCase() + app.slice(1)}
+                    content={getAppContent(app)}
+                    onClose={() => closeApp(app)}
+                    onHeaderClick={() => bringToFront(app)}
                 />
-            )}
+            ))}
         </div>
     );
 };
