@@ -12,7 +12,10 @@ const App = () => {
         { name: 'contact', src: 'contact-icon.svg' }
     ];
 
-    const bringToFront = (appName) => {
+    const bringToFront = (e, appName) => {
+        if (e.target.closest('.close-btn')) {
+            return;
+        }
         setActiveApps(prevApps => {
             const filteredApps = prevApps.filter(app => app !== appName);
             return [...filteredApps, appName];
@@ -84,7 +87,7 @@ const App = () => {
                     title={app.charAt(0).toUpperCase() + app.slice(1)}
                     content={getAppContent(app)}
                     onClose={() => closeApp(app)}
-                    onHeaderClick={() => bringToFront(app)}
+                    onHeaderClick={(e) => bringToFront(e, app)}
                 />
             ))}
         </div>

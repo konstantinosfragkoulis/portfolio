@@ -33,6 +33,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0, corner: ''});
 
     const handleMouseDown = (e) => {
+        onHeaderClick(e, title);
         const windowElement = windowRef.current;
         offsetX.current = e.clientX - windowElement.getBoundingClientRect().left;
         offsetY.current = e.clientY - windowElement.getBoundingClientRect().top;
@@ -138,8 +139,8 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     };
 
     return (
-        <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }} onClick={() => onHeaderClick(title)}>
-            <div className="header" onMouseDown={handleMouseDown}>
+        <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }} onClick={(e) => onHeaderClick(e, title)}>
+            <div className="header" onMouseDown={handleMouseDown} onClick={(e) => onHeaderClick(e, title)}>
                 <div className="window-controls">
                     <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle red"></div>
