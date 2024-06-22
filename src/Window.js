@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import './Window.css';
 
 const minWindowSizePC = {
-    "About": { minWidth: 640, minHeight: 240 },
+    "About": { minWidth: 580, minHeight: 240 },
     "Projects": { minWidth: 640, minHeight: 580 },
     "Contact": { minWidth: 480, minHeight: 280 },
 };
@@ -42,6 +42,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [isMaximized, setIsMaximized] = useState(false);
     const [lastTap, setLastTap] = useState(0);
+    const [returnToOriginalSize, setReturnToOriginalSize] = useState(true);
 
     useEffect(() => {
         const handleResize = () => {
@@ -67,12 +68,13 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
             windowElement.style.left = `${defaultPos.left}px`;
             windowElement.style.top = `${defaultPos.top}px`;
         }
-    }, [title, isMobile]);
+    }, [title, isMobile, defaultWindowSize]);
 
     const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0, corner: ''});
 
     const handleMaximize = () => {
-        setIsMaximized(!isMaximized);
+        setIsMaximized(prevIsMaximized => !prevIsMaximized);
+        console.log("Maximized: ", isMaximized);
     };
 
     const handleTouchStart = (e) => {
@@ -81,6 +83,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
 
         if (currentTime - lastTap < tapThreshold) {
             handleMaximize();
+            setReturnToOriginalSize(true);
         } else {
             handleStart(e);
         }
@@ -99,13 +102,16 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
             } else {
                 const { defaultWidth, defaultHeight } = defaultWindowSize[title] || { defaultWidth: 640, defaultHeight: 480 };
                 const defaultPos = isMobile ? defaultWindowPosMobile[title] : defaultWindowPosPC[title] || { left: 50, top: 50 };
-                windowElement.style.width = `${defaultWidth}px`;
-                windowElement.style.height = `${defaultHeight}px`;
-                windowElement.style.left = `${defaultPos.left}px`;
-                windowElement.style.top = `${defaultPos.top}px`;
+                console.log("returnToOriginalSize: ", returnToOriginalSize);
+                if (returnToOriginalSize) {
+                    windowElement.style.width = `${defaultWidth}px`;
+                    windowElement.style.height = `${defaultHeight}px`;
+                    windowElement.style.left = `${defaultPos.left}px`;
+                    windowElement.style.top = `${defaultPos.top}px`;
+                }
             }
         }
-    }, [title, isMobile, isMaximized]);
+    }, [title, isMobile, isMaximized, defaultWindowSize, returnToOriginalSize]);
 
     const getEventCoordinates = (e) => {
         if (e.touches && e.touches.length > 0) {
@@ -116,7 +122,10 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
 
     const handleStart = (e) => {
         if (isMaximized) {
+            console.log("Started Moving. Window is maximized.");
             setIsMaximized(!isMaximized);
+            setReturnToOriginalSize(false);
+            console.log("Started Moving. Return to original size: ", returnToOriginalSize)
         }
         const { clientX, clientY } = getEventCoordinates(e);
         onHeaderClick(e, title);
@@ -134,8 +143,6 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const handleMove = (e) => {
         const { clientX, clientY } = getEventCoordinates(e);
         const windowElement = windowRef.current;
-        //windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current + window.scrollX}px`;
-        //windowElement.style.top = `${clientY - offsetY.current + window.scrollY}px`;
         windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current}px`;
         windowElement.style.top = `${clientY - offsetY.current}px`;
     };
@@ -151,6 +158,8 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const handleResizeStart = (e) => {
         if (isMaximized) {
             setIsMaximized(!isMaximized);
+            setReturnToOriginalSize(false);
+            console.log("Started Resizing. Return to original size: ", returnToOriginalSize)
         }
         e.stopPropagation();
         const { clientX, clientY } = getEventCoordinates(e);
