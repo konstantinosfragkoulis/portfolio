@@ -106,7 +106,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     };
 
     const handleResizeStart = (e) => {
-        e.stopPropagation(); // Prevent triggering move logic
+        e.stopPropagation();
         const { clientX, clientY } = getEventCoordinates(e);
         isResizingRef.current = true;
         const windowElement = windowRef.current;
