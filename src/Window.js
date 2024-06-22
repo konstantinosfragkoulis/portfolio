@@ -41,6 +41,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const isResizingRef = useRef(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [isMaximized, setIsMaximized] = useState(false);
+    const [lastTap, setLastTap] = useState(0);
 
     useEffect(() => {
         const handleResize = () => {
@@ -74,6 +75,19 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
         setIsMaximized(!isMaximized);
     };
 
+    const handleTouchStart = (e) => {
+        const currentTime = Date.now();
+        const tapThreshold = 300;
+
+        if (currentTime - lastTap < tapThreshold) {
+            handleMaximize();
+        } else {
+            handleStart(e);
+        }
+
+        setLastTap(currentTime);
+    };
+
     useEffect(() => {
         const windowElement = windowRef.current;
         if (windowElement) {
@@ -101,6 +115,9 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     };
 
     const handleStart = (e) => {
+        if (isMaximized) {
+            setIsMaximized(!isMaximized);
+        }
         const { clientX, clientY } = getEventCoordinates(e);
         onHeaderClick(e, title);
         const windowElement = windowRef.current;
@@ -117,8 +134,10 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const handleMove = (e) => {
         const { clientX, clientY } = getEventCoordinates(e);
         const windowElement = windowRef.current;
-        windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current + window.scrollX}px`;
-        windowElement.style.top = `${clientY - offsetY.current + window.scrollY}px`;
+        //windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current + window.scrollX}px`;
+        //windowElement.style.top = `${clientY - offsetY.current + window.scrollY}px`;
+        windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current}px`;
+        windowElement.style.top = `${clientY - offsetY.current}px`;
     };
 
     const handleEnd = () => {
@@ -130,6 +149,9 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     };
 
     const handleResizeStart = (e) => {
+        if (isMaximized) {
+            setIsMaximized(!isMaximized);
+        }
         e.stopPropagation();
         const { clientX, clientY } = getEventCoordinates(e);
         isResizingRef.current = true;
@@ -220,7 +242,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
 
     return (
         <div className="window" ref={windowRef} style={{ top: '10%', left: '50%' }} onClick={(e) => onHeaderClick(e, title)}>
-            <div className="header" onMouseDown={handleStart} onTouchStart={handleStart} onClick={(e) => onHeaderClick(e, title)}>
+            <div className="header" onMouseDown={handleStart} onTouchStart={handleTouchStart} onClick={(e) => onHeaderClick(e, title)} onDoubleClick={handleMaximize}>
                 <div className="window-controls">
                     <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle red"></div>
