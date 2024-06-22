@@ -29,7 +29,7 @@ const defaultWindowPosPC = {
     "Contact": { left: 315, top: 115 },
 };
 const defaultWindowPosMobile = {
-    "About": { left: 200, top: 40 },
+    "About": { left: 165, top: 35 },
     "Projects": { left: 200, top: 195 },
     "Contact": { left: 245, top: 160 },
 };
