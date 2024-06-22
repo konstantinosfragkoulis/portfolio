@@ -40,6 +40,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const offsetY = useRef(0);
     const isResizingRef = useRef(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [isMaximized, setIsMaximized] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -68,6 +69,29 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     }, [title, isMobile]);
 
     const initialPos = useRef({ x: 0, y: 0, width: 0, height: 0 , left: 0, top: 0, corner: ''});
+
+    const handleMaximize = () => {
+        setIsMaximized(!isMaximized);
+    };
+
+    useEffect(() => {
+        const windowElement = windowRef.current;
+        if (windowElement) {
+            if (isMaximized) {
+                windowElement.style.width = `100vw`;
+                windowElement.style.height = `90.5vh`;
+                windowElement.style.left = `${window.innerWidth / 2}px`;
+                windowElement.style.top = `0px`;
+            } else {
+                const { defaultWidth, defaultHeight } = defaultWindowSize[title] || { defaultWidth: 640, defaultHeight: 480 };
+                const defaultPos = isMobile ? defaultWindowPosMobile[title] : defaultWindowPosPC[title] || { left: 50, top: 50 };
+                windowElement.style.width = `${defaultWidth}px`;
+                windowElement.style.height = `${defaultHeight}px`;
+                windowElement.style.left = `${defaultPos.left}px`;
+                windowElement.style.top = `${defaultPos.top}px`;
+            }
+        }
+    }, [title, isMobile, isMaximized]);
 
     const getEventCoordinates = (e) => {
         if (e.touches && e.touches.length > 0) {
@@ -204,7 +228,7 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
                     <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
                         <div className="close-circle yellow"></div>
                     </span>
-                    <span className="close-btn" onClick={(e) => { e.stopPropagation(); onClose(title); }}>
+                    <span className="close-btn" onClick={(e) => { e.stopPropagation(); handleMaximize(); }}>
                         <div className="close-circle green"></div>
                     </span>
                 </div>
