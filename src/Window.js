@@ -93,9 +93,8 @@ const Window = ({ title, content, onClose, onHeaderClick }) => {
     const handleMove = (e) => {
         const { clientX, clientY } = getEventCoordinates(e);
         const windowElement = windowRef.current;
-        windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current}px`;
-        windowElement.style.top = `${clientY - offsetY.current}px`;
-        console.log("left: ", windowElement.style.left, "top: ", windowElement.style.top)
+        windowElement.style.left = `${(windowElement.offsetWidth/2) + clientX - offsetX.current + window.scrollX}px`;
+        windowElement.style.top = `${clientY - offsetY.current + window.scrollY}px`;
     };
 
     const handleEnd = () => {
